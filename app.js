@@ -4,6 +4,10 @@ const categoriesEl = document.getElementById("categories");
 const categoriesEl2 = document.getElementsByClassName("categories");
 const categoriesText = document.getElementById("categoriesText");
 
+const btn = document.createElement("Button");
+btn.innerHTML = "Add to cart";
+document.body.appendChild(btn);
+
 
 fetch('https://fakestoreapi.com/products/categories').then((data) =>{
 console.log(data)
@@ -16,17 +20,44 @@ let tableData="";
 objectData.map((values)=>{
   tableData+=`<h2>${values}</h2>`;
 });
-document.getElementById("tbody").innerHTML=tableData;
+document.getElementById("category-header").innerHTML=tableData;
 })
 
 
-if(Response.fetch){
+
+
+fetch('https://fakestoreapi.com/products/').then((data) =>{
+console.log(data)
+return data.json();
+})
+
+.then((objectData)=>{
+  console.log(objectData[0] + " This is object number one");
+let tableData="";
+objectData.map((itemValues)=>{
+  tableData+=`${itemValues.title} 
+  <img src="${itemValues.image}"/>  <br>`
+  
+  ;
+});
+document.getElementById("category-body").innerHTML=tableData;
+})
+
+
+
+
+
+
+
+
+if(Response){
   console.log('Successfully connected!')
 } else {
   console.log('Connection error')
 }
     
 
+/*
 function printJSon(output){
   (console.log(output.categories[i] + "test"));
   output.categoriesEl.innerHTML = output.categoriesEl2.title;
@@ -40,7 +71,7 @@ for (let i = 0; i < output.categories.length; i++){
 
 
 
-}
+} */
 
 
 
