@@ -4,9 +4,8 @@ const categoriesEl = document.getElementById("categories");
 const categoriesEl2 = document.getElementsByClassName("categories");
 const categoriesText = document.getElementById("categoriesText");
 
-const btn = document.createElement("Button");
-btn.innerHTML = "Add to cart";
-document.body.appendChild(btn);
+const electronicsCategoryBtn = document.createElement("Button")
+
 
 
 fetch('https://fakestoreapi.com/products/categories').then((data) =>{
@@ -21,11 +20,29 @@ objectData.map((values)=>{
   tableData+=`<h2>${values}</h2>`;
 });
 document.getElementById("category-header").innerHTML=tableData;
+
+
+
+
+
+
 })
 
 
 
 
+
+
+
+
+
+//objectData.addEventListener("click", myScript);
+
+
+
+
+
+/*
 fetch('https://fakestoreapi.com/products/').then((data) =>{
 console.log(data)
 return data.json();
@@ -37,11 +54,53 @@ let tableData="";
 objectData.map((itemValues)=>{
   tableData+=`${itemValues.title} 
   <img src="${itemValues.image}"/>  <br>`
+
+  
   
   ;
 });
-document.getElementById("category-body").innerHTML=tableData;
+document.getElementById("items-body").innerHTML=tableData;
+
+
+}) */
+
+
+
+
+fetch('https://fakestoreapi.com/products/category/electronics').then((data) =>{
+console.log(data)
+return data.json();
 })
+
+.then((objectData)=>{
+  console.log(objectData[0].title + " This is object number one");
+let tableData="";
+objectData.map((itemValues)=>{
+  tableData+=`<h1>${itemValues.title}</h1>
+  <img src="${itemValues.image}"/>  
+  <b>${itemValues.price} USD </b> <br>
+  <b>${itemValues.description}
+  `;
+ 
+  
+});
+document.getElementById("items-body").
+innerHTML=tableData;
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
