@@ -20,6 +20,7 @@
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+    import {getFireStore, addDoc, setDoc, doc} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
   
@@ -35,6 +36,25 @@
   
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    const db = getFireStore(app);
+
+
+
+
+
+
+var firstName = document.getElementById('customerFirstName').value;
+var lastName = document.getElemntById('customerLastName').value;
+
+
+    orderSubmitButton.addEventListerner('click', (e) => {
+      addDoc(doc(db, "orders" ),{
+firstName: customerFirstName,
+lastName: customerLastName
+
+      });
+      alert('User added')
+    });
   </script>
 
 </body>
