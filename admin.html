@@ -47,7 +47,7 @@ var firstName = document.getElementById('customerFirstName').value;
 var lastName = document.getElemntById('customerLastName').value;
 
 
-    orderSubmitButton.addEventListerner('click', (e) => {
+    orderSubmitButton.addEventListener('click', (e) => {
       addDoc(doc(db, "orders" ),{
 firstName: customerFirstName,
 lastName: customerLastName

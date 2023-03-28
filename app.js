@@ -52,7 +52,8 @@ function buyingFunction($itemTitle){
 
 
 
-fetch('https://fakestoreapi.com/products/category/electronics').then((data) =>{
+
+fetch('https://fakestoreapi.com/products/category/electronics').then((data) =>{ //Page display
 console.log(data)
 return data.json();
 })
@@ -64,7 +65,55 @@ objectData.map((itemValues)=>{
   tableData+=`<h1>${itemValues.title}</h1>
   <img src="${itemValues.image}"/>  
   <b>${itemValues.price} USD </b> <br>
-  <b>${itemValues.description} <br>`;
+  <b>${itemValues.description} <br>
+  <b>${itemValues.id} <br>
+  <button data-item-id="${itemValues.id}" data-item-title="${itemValues.title}" data-item-price"=${itemValues.price}" class="buy-btn">Buy</button>
+  
+  `;
+
+});
+
+  document.getElementById('itemValues').innerHTML = tableData;
+
+  const buyButtons = document.querySelectorAll('.buy-btn');
+  buyButtons.forEach((button) => {
+    
+const itemTitle = button.dataset.itemTitle;
+const itemPrice = button.dataset.itemPrice;
+const itemId = button.dataset.itemId;
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFireStore(app);
+
+db.collection('orders').add({
+  itemTitle,
+  itemPrice,
+  itemId
+
+
+}).then(() => {
+alert ('Item added to orders!');
+}).catch((error) => {
+  console.error(error);
+});
+
+
+  });
+
+
+});
+
+  
+
+
+
+
+
+
+
+
+  /*
   purchaseBtn.dataset.itemTitle = itemValues.title;
  tableData += purchaseBtn.outerHTML; 
 });
@@ -72,10 +121,4 @@ document.getElementById("items-body").
 innerHTML=tableData;
 })
 
-
-if(Response){
-  console.log('Successfully connected!')
-} else {
-  console.log('Connection error')
-}
-  
+  */
