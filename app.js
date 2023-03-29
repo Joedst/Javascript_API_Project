@@ -1,5 +1,8 @@
 "use strict";
 
+
+
+
 const categoriesEl = document.getElementById("categories");
 const categoriesEl2 = document.getElementsByClassName("categories");
 const categoriesText = document.getElementById("categoriesText");
@@ -40,17 +43,12 @@ fetch('https://fakestoreapi.com/products/categories')
             .then(res=>res.json())
             .then(json=>console.log(json))
 
-//orders/vCCAsefKZ65ciE1MNTD8
 
+       
+            
 
-function buyingFunction($itemTitle){
-  console.log('Object ${itemTitle} was added to purchase');
-  //skicka till annan sida
-
-}
-
-
-
+           
+           
 
 
 fetch('https://fakestoreapi.com/products/category/electronics').then((data) =>{ //Page display
@@ -67,13 +65,13 @@ objectData.map((itemValues)=>{
   <b>${itemValues.price} USD </b> <br>
   <b>${itemValues.description} <br>
   <b>${itemValues.id} <br>
-  <button data-item-id="${itemValues.id}" data-item-title="${itemValues.title}" data-item-price"=${itemValues.price}" class="buy-btn">Buy</button>
+  <button data-item-id="${itemValues.id}" data-item-title="${itemValues.title}" data-item-price="${itemValues.price}" class="buy-btn">Buy</button>
   
   `;
 
 });
 
-  document.getElementById('itemValues').innerHTML = tableData;
+document.getElementById('itemValues').innerHTML = tableData;
 
   const buyButtons = document.querySelectorAll('.buy-btn');
   buyButtons.forEach((button) => {
@@ -83,42 +81,18 @@ const itemPrice = button.dataset.itemPrice;
 const itemId = button.dataset.itemId;
 
 
-const app = initializeApp(firebaseConfig);
-const db = getFireStore(app);
-
-db.collection('orders').add({
-  itemTitle,
-  itemPrice,
-  itemId
 
 
-}).then(() => {
-alert ('Item added to orders!');
-}).catch((error) => {
-  console.error(error);
-});
-
-
+button.addEventListener('click', () => {
+  db.addDoc.collection('orders').add({
+    itemTitle,
+    itemPrice,
+    itemId
+  }).then(() => {
+    alert ('Item added to orders!');
+  }).catch((error) => {
+    console.error(error);
   });
-
-
 });
-
-  
-
-
-
-
-
-
-
-
-  /*
-  purchaseBtn.dataset.itemTitle = itemValues.title;
- tableData += purchaseBtn.outerHTML; 
 });
-document.getElementById("items-body").
-innerHTML=tableData;
-})
-
-  */
+});
