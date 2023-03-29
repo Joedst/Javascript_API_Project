@@ -1,6 +1,11 @@
 "use strict";
 
 
+import { db } from './firebase-db.js';
+import { getFirestore, addDoc, setDoc, doc, collection,  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
+
+
 
 
 const categoriesEl = document.getElementById("categories");
@@ -44,7 +49,7 @@ fetch('https://fakestoreapi.com/products/categories')
             .then(json=>console.log(json))
 
 
-       
+           
             
 
            
@@ -83,8 +88,13 @@ const itemId = button.dataset.itemId;
 
 
 
+
+
+
+
+
 button.addEventListener('click', () => {
-  db.addDoc.collection('orders').add({
+  addDoc(collection(db.addDoc, 'orders'), {
     itemTitle,
     itemPrice,
     itemId
