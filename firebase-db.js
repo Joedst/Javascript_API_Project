@@ -15,9 +15,23 @@ const firebaseConfig = {
   appId: "1:746035261722:web:10b318c77287080d03fca3"
 };
 
+/*
+const serviceAccount = require('./creds.json)
+
 // Initialize Firebase
+
+
+initializeApp({
+  credential: cert(serviceAccount)
+}) */
+
+
+
 const app = initializeApp(firebaseConfig);
 const db =  getFirestore(app);
+
+
+
 
 
 export { db }

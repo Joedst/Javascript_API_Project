@@ -1,8 +1,8 @@
 "use strict";
 
-
-import { db } from './firebase-db.js';
 import { getFirestore, addDoc, setDoc, doc, collection,  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+import { db } from './firebase-db.js';
+
 
 
 
@@ -50,7 +50,24 @@ fetch('https://fakestoreapi.com/products/categories')
 
 
            
+         
+       fetch('https://firestore.googleapis.com/v1/projects/JavascriptAPIDatabase/databases/(default)/documents/users')
             
+let body =
+JSON.stringify (
+{
+
+"username" : {
+  "stringValue": "testar en gång till"
+},
+"email": {
+  "stringValue": "simon@hej.se"
+}
+}
+
+
+)
+
 
            
            
