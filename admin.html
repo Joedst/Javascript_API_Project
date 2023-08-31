@@ -12,53 +12,50 @@
 <a href="index.html">Home</a>
 <a href="cart.html">Purchase</a>
   <BR></BR>
-<b>Firebase access here</b>
 
 
 
-  
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-    import {getFireStore, addDoc, setDoc, doc} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyCMX5oBPbPjw3VVdzgv0uGvaFuKxNMDVsU",
-      authDomain: "javascriptapiproj.firebaseapp.com",
-      projectId: "javascriptapiproj",
-      storageBucket: "javascriptapiproj.appspot.com",
-      messagingSenderId: "967958732762",
-      appId: "1:967958732762:web:f4c03f71f7959f05d7eae3"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFireStore(app);
+<section>
 
+<article class="articleFrame">
+  <h2>Admin page</h2>
+  <h1>Deleting orders - Editing orders</h1>
+                <br><br>
+            <fieldset>
+                <legend><strong>Update order data:</strong></legend><br>
+                    <form onSubmit="return false">
+                      <input type="text" id="admin-id" name="id" placeholder="Enter current order ID link">
+                        <br><br>
+                        <input type="text" id="admin-name" name="name" placeholder="Enter new full name" required>
+                        <br><br>
+                        <input type="email" id="admin-epost" name="epost" placeholder="Enter new email" required>
+                        <br><br>
+                        <input type="text" id="admin-address" name="address" placeholder="Enter new adress" required>
+                        <br><br>
+                        <input type="text" id="admin-productId" name="productid" placeholder="Enter new product ID">
+                        <br><br>
+                        <select name="shipping" id="admin-shipping"> required>
+                            <option value="" disabled selected>---</option>
+                          
+                              <option value="postOfficeDelivery">Delivery to nearest post office (FREE)</option>
+                              <option value="Booking">Home delivery ($5)</option>
+                              <option value="Booking">Instabox(FREE - get it by thursday)</option>
+                              <br>
+                      
+                              
+              
+                        </select>
+                        <button type="button" class="btn" id="orderUpdateButton">Update order</button>
+                    </form>
+                </fieldset>
+        </article>
+    </section>
+    <h2>Placed Orders:</h2>
+    <section id="adminSection"></section>
 
+    
 
-
-
-
-
-var firstName = document.getElementById('customerFirstName').value;
-var lastName = document.getElemntById('customerLastName').value;
-
-
-    orderSubmitButton.addEventListener('click', (e) => {
-      addDoc(doc(db, "orders" ),{
-firstName: customerFirstName,
-lastName: customerLastName
-
-      });
-      alert('User added')
-    });
-  </script>
-
-</body>
-</html>
 
 <script type = "module" src="admin.js"></script>
+</body>
+</html> 
