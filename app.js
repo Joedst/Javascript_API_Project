@@ -87,7 +87,8 @@ objectData.map((itemValues)=>{
   <b>${itemValues.price} USD </b> <br>
   <b>${itemValues.description} <br>
   <b>${itemValues.id} <br>
-  <button data-item-id="${itemValues.id}" data-item-title="${itemValues.title}" data-item-price="${itemValues.price}" class="buy-btn">Buy</button>
+  <button data-item-id="${itemValues.id}" data-item-title="${itemValues.title}" data-item-price="${itemValues.price}" class="buy-btn" onClick="addOrder">Buy</button> 
+  
   
   `;
 

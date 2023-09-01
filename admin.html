@@ -28,23 +28,20 @@
                         <br><br>
                         <input type="text" id="admin-name" name="name" placeholder="Enter new full name" required>
                         <br><br>
-                        <input type="email" id="admin-epost" name="epost" placeholder="Enter new email" required>
+                        <input type="email" id="admin-email" name="email" placeholder="Enter new email" required>
                         <br><br>
                         <input type="text" id="admin-address" name="address" placeholder="Enter new adress" required>
                         <br><br>
                         <input type="text" id="admin-productId" name="productid" placeholder="Enter new product ID">
                         <br><br>
-                        <select name="shipping" id="admin-shipping"> required>
-                            <option value="" disabled selected>---</option>
-                          
-                              <option value="postOfficeDelivery">Delivery to nearest post office (FREE)</option>
-                              <option value="Booking">Home delivery ($5)</option>
-                              <option value="Booking">Instabox(FREE - get it by thursday)</option>
-                              <br>
-                      
-                              
-              
-                        </select>
+
+                        <select name="deliveryMethods" id="admin-shipping">
+                          <option value="postOfficeDelivery">Post office</option>
+                          <option value="homeDelivery">Home delivery</option>
+                          <option value="instaBoxDelivery">Instabox</option>
+                      </select>
+                      -
+          
                         <button type="button" class="btn" id="orderUpdateButton">Update order</button>
                     </form>
                 </fieldset>

@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Contact</title>
+    <title>Order Page</title>
     <script defer src="app.js"></script>
-    <script src="firebase-db.js"></script>
+    
 </head>
 
 
 
 <body>
     
-
+    <a href="index.html">Home</a>
 <a href="admin.html">Admin page</a>
-<a href="index.html">Home</a>
+
 
 <br>
 <br>
@@ -26,25 +26,26 @@
     <div class="contact-box">
         <form action="/" method="GET">
 
-            <input type="text" class="input-field" placeholder="full name" id="customerFirstName">
+            <input type="text" class="input-field" placeholder="full name" id="customerFullName">
             <br>
            
             <input type="text" class="input-field" placeholder="your email" id="customerEmail">
             <br>
             <input type="text" class="input-field" placeholder="adress" id="customerAdress">
             <br>
-            <input type="text" class="input-field" placeholder="item ordered" id="customerPhone">
+            <input type="text" class="input-field" placeholder="product id" id="productId">
 
             <br>
 
 
           
-            <select name="options" id="options">
-                <option value="postOfficeDelivery">Delivery to nearest post office (FREE)</option>
-                <option value="Booking">Home delivery ($5)</option>
-                <option value="Booking">Instabox(FREE - get it by thursday)</option>
+            <select name="deliveryMethods" id="deliveryOption">
+                <option value="postOfficeDelivery">Post office</option>
+                <option value="homeDelivery">Home delivery</option>
+                <option value="instaBoxDelivery">Instabox</option>
             </select>
             <button type="button" class="btn" id="orderSubmitButton">Order</button>
+
 
 
             
@@ -56,7 +57,7 @@
 
  
 
-<script src="firebase-db.js"></script>
+<script src="new firebase-db.js"></script>
 <script src="cart.js"></script>
 
 
