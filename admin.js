@@ -77,70 +77,92 @@ function updateOrderData() {
     })
     .catch(error => console.log(error));
 }
+
+
 function getAdminContent(content) {
     const contDocs = content.documents;
 
-    if (content.name) {
+    let adminHTML = ""; 
+
+    for (let content of contDocs) {
         const fullDocsPath = content.name;
         const parts = fullDocsPath.split('/');
-        const documentOrderID = parts[parts.length - 1]; 
-        console.log("Extracted orderID:", documentOrderID);
+        const documentOrderID = parts[parts.length - 1]; //Extraherar dokumentid
 
-        let adminHTML = ""; // Initialize an empty string
+        adminHTML += `
+            <br>
+            <article class="articleFrame">
+                <ul class="admin">
+                    <li> Order ID: ${documentOrderID}</li>
+                    <br>
+        `;
 
-        for (let content of contDocs) {
-            console.log(documentOrderID);
-            console.log(content);
-
-            adminHTML += `
-                <br>
-                <article class="articleFrame">
-                    <ul class="admin">
-                        <li> Order ID: ${documentOrderID}</li>
-                        <br>
-                        <li>Customer Name: ${content.fields.fullName.stringValue}</li>
-                        <li>Customer Address: ${content.fields.address.stringValue}</li>
-                        <li>Customer Email: ${content.fields.email.stringValue}</li>
-                        <li>Product id: ${content.fields.productId.stringValue}</li>
-                        <li>Shipping: ${content.fields.shipping.stringValue}</li>
-                        <br>
-                        <input type="button" value="Delete order" onClick="deleteOrder('${content.name}')">
-                    </ul>
-                    <hr>
-                </article>
-            `;
+        if (content.fields) {
+            if (content.fields.fullName && content.fields.fullName.stringValue) {
+                adminHTML += `<li>Customer Name: ${content.fields.fullName.stringValue}</li>`;
+            }
+            if (content.fields.address && content.fields.address.stringValue) {
+                adminHTML += `<li>Customer Address: ${content.fields.address.stringValue}</li>`;
+            }
+            if (content.fields.email && content.fields.email.stringValue) {
+                adminHTML += `<li>Customer Email: ${content.fields.email.stringValue}</li>`;
+            }
+            if (content.fields.productId && content.fields.productId.stringValue) {
+                adminHTML += `<li>Product id: ${content.fields.productId.stringValue}</li>`;
+            }
+            if (content.fields.shipping && content.fields.shipping.stringValue) {
+                adminHTML += `<li>Shipping: ${content.fields.shipping.stringValue}</li>`;
+            }
         }
 
-        adminSectionEl.innerHTML = adminHTML; // Set the innerHTML after the loop
-    } else {
-        console.log("Content name is undefined.");
-    }
+        adminHTML += `
+            <br>
+            <input type="button" value="Delete order" onClick="deleteOrder('${content.name}')">
+            </ul>
+            <hr>
+            </article>
+        `;
 }
 
-//<li>Customer Shipping: ${content.fields.shipping.stringValue}</li> <li>Product IDs: ${(content.fields.productId.arrayValue.values.map(values => values.stringValue))}</li>
-
-/*
-constOrdersCollection = db.collectionGroup('orders')
-const orderId = content.orderId;
-
-
-ordersCollection.where(admin.firestore.FieldPath.documentId(), "==", orderId)
-  .get()
-  .then((querySnapshot) => {
-    if (!querySnapshot.empty) {
-      const orderDocRef = querySnapshot.docs[0].ref;
-
-    } else {
-        console.log("Order not found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error retrieving order: ", error);
+    adminSectionEl.innerHTML = adminHTML;  //Kod nedan har unikt id till deleteOrderButton och en data-document-id som sparar id associerat med den knappen
+    const deleteOrderButtons = document.querySelectorAll('#deleteOrderButton');
+    deleteOrderButtons.forEach(button => {
+        button.addEventListener('click', () => { //Event listener addas till varje knapp, when click -> deleteOrder funktionen
+            const documentId = button.getAttribute('data-document-id');
+            deleteOrder(documentId);
+        });
     });
-<input type="button" value="delete order" onClick="deleteUser('${content.name}')">'
+}
 
-localStorage.clear();   //rensar localstorage efter post
-    setTimeout(() => location.reload(), 3000); //reloadar sidan 3 sek efter post
-<input type="button" value="update order" onClick="update('${content.name}')"> 
 
-*/
+
+
+function deleteOrder(documentId) {
+
+    document.getElementById('orderUpdateButton');
+    
+    const firestoreDocumentURL = `https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders/${documentId}`;
+
+    fetch(firestoreDocumentURL, {
+        method: "DELETE", 
+    })
+    .then(res => {
+        if (res.status === 204) {
+            
+            console.log("Document deleted successfully.");
+            
+            const orderElement = document.querySelector(`[data-order-id="${documentId}"]`); //Tar bort HTML elementen associerade med ordern också:
+            if (orderElement) {
+                orderElement.remove();
+            }
+
+            location.reload(); //Refreshar hemsidan efter deletion
+        } else {
+            console.log("Failed to delete document.");
+        }
+    })
+    .catch(error => console.log(error));
+}
+
+
+
