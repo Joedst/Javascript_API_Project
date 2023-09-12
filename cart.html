@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Order Page</title>
-    <script defer src="app.js"></script>
+    
     
 </head>
 
@@ -24,17 +24,23 @@
 <br><br><br>
 
     <div class="contact-box">
-        <form action="/" method="GET">
+        <form action="/" method="GET" id="orderform">
+
+
+            <label for="productTitle">Product Title:</label>
+            <input type="text" id="productTitle" name="customerProductTitle" readonly>
+            <br><br>
+            <label for="productId">Product ID:</label>
+            <input type="text" id="productId" name="customerProductId" readonly>
+            <br>
 
             <input type="text" class="input-field" placeholder="full name" id="customerFullName">
             <br>
            
             <input type="text" class="input-field" placeholder="your email" id="customerEmail">
             <br>
-            <input type="text" class="input-field" placeholder="adress" id="customerAdress">
+            <input type="text" class="input-field" placeholder="address" id="customerAddress">
             <br>
-            <input type="text" class="input-field" placeholder="product id" id="productId">
-
             <br>
 
 
@@ -46,20 +52,14 @@
             </select>
             <button type="button" class="btn" id="orderSubmitButton">Order</button>
 
-
-
-            
+    
 
         </form>
     </div>
 
 
 
- 
-
-<script src="new firebase-db.js"></script>
-<script src="cart.js"></script>
-
+    <script type = "module" src="cart.js"></script>
 
 </body>
 

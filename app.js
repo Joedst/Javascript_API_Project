@@ -1,12 +1,5 @@
 "use strict";
 
-import { getFirestore, addDoc, setDoc, doc, collection,  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-import { db } from './firebase-db.js';
-
-
-
-
-
 
 const categoriesEl = document.getElementById("categories");
 const categoriesEl2 = document.getElementsByClassName("categories");
@@ -15,12 +8,9 @@ const categoriesText = document.getElementById("categoriesText");
 const electronicsCategoryBtn = document.createElement("Button")
 
 
-const purchaseBtn = document.createElement("Button");
-purchaseBtn.innerHTML='Buy'
-purchaseBtn.addEventListener("click", function() {
-  buyingFunction(this.dataset.itemTitle);
-  
-});
+
+
+
 
 
 
@@ -44,39 +34,64 @@ document.getElementById("category-header").innerHTML=tableData;
 })
 
 
-fetch('https://fakestoreapi.com/products/categories')
-            .then(res=>res.json())
-            .then(json=>console.log(json))
-
-
            
-         
-       fetch('https://firestore.googleapis.com/v1/projects/JavascriptAPIDatabase/databases/(default)/documents/users')
-            
-let body =
-JSON.stringify (
-{
-
-"username" : {
-  "stringValue": "testar en gång till"
-},
-"email": {
-  "stringValue": "simon@hej.se"
-}
+function redirectToOrderPage(productId, productTitle) {
+  console.log("Starting redirectToOrderPage function")
+  
+  setTimeout(() => {
+    window.location.href = `cart.html?productId=${encodeURIComponent(productId)}&productTitle=${encodeURIComponent(productTitle)}`;
+  }, 2000);
+  
 }
 
-
-)
-
-
-           
-           
 
 
 fetch('https://fakestoreapi.com/products/category/electronics').then((data) =>{ //Page display
 console.log(data)
 return data.json();
 })
+
+.then((objectData) => {
+  // ...
+
+  const tableData = document.getElementById('itemValues');
+
+  objectData.forEach((itemValues) => {
+    const productItem = document.createElement('div');
+
+    productItem.innerHTML = `
+      <h1>${itemValues.title}</h1>
+      <img src="${itemValues.image}" />
+      <b>${itemValues.price} USD </b> <br>
+      <b>${itemValues.description} <br>
+      <b>${itemValues.id} <br>
+    `;
+
+    const buyButton = document.createElement('button');
+    buyButton.textContent = 'Buy';
+
+    buyButton.addEventListener('click', () => {
+      console.log("Redirecting: ", itemValues.title)
+      redirectToOrderPage(itemValues.id, itemValues.title);
+    });
+
+    productItem.appendChild(buyButton); 
+    tableData.appendChild(productItem); 
+  });
+});
+
+
+
+
+
+//<button data-item-id="${itemValues.id}" data-item-title="${itemValues.title}" data-item-price="${itemValues.price}" class="buy-btn" onClick="redirectToOrderPage('${itemValues.id}', '${itemValues.title}')">Buy</button> 
+
+
+
+
+
+/*
+
 
 .then((objectData)=>{
   console.log(objectData[0].title + " This is object number one");
@@ -87,40 +102,17 @@ objectData.map((itemValues)=>{
   <b>${itemValues.price} USD </b> <br>
   <b>${itemValues.description} <br>
   <b>${itemValues.id} <br>
-  <button data-item-id="${itemValues.id}" data-item-title="${itemValues.title}" data-item-price="${itemValues.price}" class="buy-btn" onClick="addOrder">Buy</button> 
+ 
   
   
   `;
+  const buyButton = document.createElement('button');
+        buyButton.textContent = 'Buy';
+        buyButton.addEventListener('click', () => {
+            redirectToOrderPage(itemValues.id, itemValues.title);
+        });
+        tableData += buyButton.outerHTML;
 
 });
 
-document.getElementById('itemValues').innerHTML = tableData;
-
-  const buyButtons = document.querySelectorAll('.buy-btn');
-  buyButtons.forEach((button) => {
-    
-const itemTitle = button.dataset.itemTitle;
-const itemPrice = button.dataset.itemPrice;
-const itemId = button.dataset.itemId;
-
-
-
-
-
-
-
-
-
-button.addEventListener('click', () => {
-  addDoc(collection(db.addDoc, 'orders'), {
-    itemTitle,
-    itemPrice,
-    itemId
-  }).then(() => {
-    alert ('Item added to orders!');
-  }).catch((error) => {
-    console.error(error);
-  });
-});
-});
-});
+*/ 

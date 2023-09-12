@@ -1,4 +1,4 @@
-import { db } from './firebase-db.js';
+
 "use strict";
 
 
@@ -60,11 +60,11 @@ function updateOrderData() {
     console.log("This is documentid " + documentId);
     console.log("Updating function active.... Beginning fetch");
 
-    // Construct the Firestore document URL with the retrieved documentId
+    
     const firestoreDocumentURL = `https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders/${documentId}`;
 
     fetch(firestoreDocumentURL, {
-        method: "PATCH", // Use PATCH to update an existing document
+        method: "PATCH", 
         headers: {
             "Content-type": "application/json"
         },
@@ -117,7 +117,7 @@ function getAdminContent(content) {
 
         adminHTML += `
             <br>
-            <input type="button" value="Delete order" onClick="deleteOrder('${content.name}')">
+            <input type="button" class="deleteOrderButton" data-document-id="${content.name}" value="Delete order">
             </ul>
             <hr>
             </article>
@@ -125,7 +125,7 @@ function getAdminContent(content) {
 }
 
     adminSectionEl.innerHTML = adminHTML;  //Kod nedan har unikt id till deleteOrderButton och en data-document-id som sparar id associerat med den knappen
-    const deleteOrderButtons = document.querySelectorAll('#deleteOrderButton');
+    const deleteOrderButtons = document.querySelectorAll('.deleteOrderButton');
     deleteOrderButtons.forEach(button => {
         button.addEventListener('click', () => { //Event listener addas till varje knapp, when click -> deleteOrder funktionen
             const documentId = button.getAttribute('data-document-id');
@@ -139,9 +139,10 @@ function getAdminContent(content) {
 
 function deleteOrder(documentId) {
 
-    document.getElementById('orderUpdateButton');
+    
     
     const firestoreDocumentURL = `https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders/${documentId}`;
+    console.log("Trying to delete document with ID:", firestoreDocumentURL);
 
     fetch(firestoreDocumentURL, {
         method: "DELETE", 
@@ -158,11 +159,25 @@ function deleteOrder(documentId) {
 
             location.reload(); //Refreshar hemsidan efter deletion
         } else {
-            console.log("Failed to delete document.");
+            console.log("Failed to delete document. Status Code:", res.status);
         }
     })
     .catch(error => console.log(error));
 }
 
 
+/*
+if (res.status === 204) {
+            
+    console.log("Document deleted successfully.");
+    
+    const orderElement = document.querySelector(`[data-order-id="${documentId}"]`); 
+    if (orderElement) {
+        orderElement.remove();
+    }
 
+    location.reload(); //Refreshar hemsidan efter deletion
+} else {
+    console.log("Failed to delete document.");
+}
+}) */

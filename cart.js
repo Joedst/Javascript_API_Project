@@ -1,108 +1,97 @@
+document.addEventListener("DOMContentLoaded", function () { //När HTML blivit helt parsat
 
 
-//const orderId = document.getElementById("admin-orderId")
-const fullNameEl = document.getElementById("customerFullName");
-const emailEl = document.getElementById("customerEmail");
-const addressEl = document.getElementById("CustomerAdress");
-const productIdEl = document.getElementById("productId")
-const shippingEl = document.getElementById("deliveryOption");
-const orderSubmitButtonEl = document.getElementById("orderSubmitButton");
-//const adminSectionEl = document.getElementById("adminSection");
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get("productId");
+const productTitle = urlParams.get("productTitle");
+
+console.log(`productId: ${productId}, productTitle: ${productTitle}, were succesfully recieved`);
+
+
+const orderForm = document.getElementById("orderform"); //Kod fungerade ej innan för att innehåll i form behövde hämtas like this 
+const orderSubmitButton = document.getElementById("orderSubmitButton");
+
+const customerProductId = orderForm.elements["customerProductId"];
+  const customerProductTitle = orderForm.elements["customerProductTitle"];
+
+  customerProductId.value = productId;
+  customerProductTitle.value = productTitle;
+  
 
 
 
 
 
 
-function submitOrder()
 
-{
 
+orderSubmitButton.addEventListener("click", (e) => {
+    e.preventDefault(); //Hindrar default form sub
+    console.log ("this is the current state of producttitle" + productTitle.value);
+
+    const fullName = document.getElementById("customerFullName").value;
+    const email = document.getElementById("customerEmail").value;
+    const selectedShippingOption = document.getElementById("deliveryOption").value;
+    const address = document.getElementById("customerAddress").value;
     
-const fullName = fullNameEl.value.trim();
-const email = emailEl.value.trim();
-const address = addressEl.value.trim();
-const shipping = shippingEl.value.trim();
 
-
-
-if (!fullName || !email || !address || !shipping) {
-    console.log("Some or all customer info is missing")
-    return;
-}
-
-
-const idproducts = productarray.map(content => {
-    return {
-        "stringValue": content.id 
-    }
-});
-
-let body = JSON.stringify(
-    {
-    "fields": {
-        "fullName": { 
-            "stringValue": fullName
+    const orderData = {
+        fields: {
+          fullName: { stringValue: fullName },
+          email: { stringValue: email },
+          selectedShippingOption: { stringValue: selectedShippingOption },
+          address: { stringValue: address },
+          productId: { stringValue: customerProductId.value },
+          productTitle: { stringValue: customerProductTitle.value },
         },
-        "email": {
-            "stringValue": email
-        },
-        "address": {
-            "stringValue": address
-        },
-        "shipping": {
-            "stringValue": shipping
-        },
-        "idproduct": {
-            "arrayValue": {
-                "values": idproducts
-            } 
-        }
-    }   
-}
-);
-
-
-fetch("https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders", {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: body
-})
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
+      };
     
-    console.log(body);
-
-    localStorage.clear();   //rensar localstorage efter post
-    setTimeout(() => location.reload(), 3000); //reloadar sidan 3 sek efter post
-
-};
+    postOrderData(orderData);
+}); });
 
 
+function postOrderData(orderData){
 
 
-
-
-
-
-
-
-
-orderSubmitButton.addEventListener('click', (e) => {
-
-    if (customerEmail.value === '' || customerEmail.value == null) {
-        console.log("Button was clicked");
-        console.log("User not entering contactable information")
-        alert("Email have to be inserted so we may respond to you!");
-    } else {
-        console.log("Valid message sent");
-        orderSubmitButton.innerHTML = "<h3> Message was sent!"
-    }
+    const firestoreCollectionURL = "https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders";
+console.log("Sending orderData:", orderData);
+    fetch(firestoreCollectionURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData), //objekt -> JSON
+        
+    })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Failed to post order data.");
+            }
+        })
+        .then((data) => {
+            
+            console.log("Order data posted:", data);
+            alert("Order submitted successfully!");
+        })
+        .catch((error) => {
+            console.error("Error:", error, orderData);
+            alert("Failed to submit order. Please try again later.");
+        });
 }
-)
 
 
 
+/*
+
+const orderData = {
+    fullName,
+    email,
+    selectedShippingOption,
+    address,
+    productId: customerProductId.value,
+productTitle: customerProductTitle.value,
+  };
+
+  */
