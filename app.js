@@ -40,7 +40,7 @@ function redirectToOrderPage(productId, productTitle) {
 
 
 
-fetch('https://fakestoreapi.com/products/category/electronics').then((data) => { //Page display
+fetch('https://fakestoreapi.com/products').then((data) => { //Page display
   console.log(data)
   return data.json();
 })
