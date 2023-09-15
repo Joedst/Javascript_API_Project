@@ -54,11 +54,14 @@ fetch('https://fakestoreapi.com/products').then((data) => { //Page display
       const productItem = document.createElement('div');
 
       productItem.innerHTML = `
-      <h1>${itemValues.title}</h1>
+      
+      <h1>${itemValues.title}</h1> 
+      <i> Product ID: ${itemValues.id} </i> <br>
       <img src="${itemValues.image}" />
       <b>${itemValues.price} USD </b> <br>
       <b>${itemValues.description} <br>
-      <b>${itemValues.id} <br>
+
+      
     `;
 
       const buyButton = document.createElement('button');

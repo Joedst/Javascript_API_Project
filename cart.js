@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () { //När HTML blivit h
 
     orderSubmitButton.addEventListener("click", (e) => {
         e.preventDefault(); //Hindrar default form sub
-        console.log("this is the current state of producttitle" + productTitle.value);
+        
 
         const fullName = document.getElementById("customerFullName").value;
         const email = document.getElementById("customerEmail").value;
