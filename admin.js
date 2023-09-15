@@ -12,10 +12,10 @@ const adminSectionEl = document.getElementById("adminSection");
 const orderUpdateButtonEl = document.getElementById('orderUpdateButton');
 
 
-fetch("https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders") 
-.then(res => res.json())
-.then(data => getAdminContent(data))
-.catch(error => console.log(error));
+fetch("https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders")
+    .then(res => res.json())
+    .then(data => getAdminContent(data))
+    .catch(error => console.log(error));
 
 let documentOrderID = '';
 
@@ -23,12 +23,12 @@ let documentOrderID = '';
 
 
 orderUpdateButtonEl.addEventListener('click', () => {
-    console.log("Update order was clicked"); 
+    console.log("Update order was clicked");
     updateOrderData();
 });
 
 function updateOrderData() {
-    const documentId = orderId.value; 
+    const documentId = orderId.value;
     const customerName = fullNameEl.value;
     const customerEmail = emailEl.value;
     const customerAddress = addressEl.value;
@@ -36,7 +36,7 @@ function updateOrderData() {
     const selectedShippingOption = shippingEl.value;
 
     console.log("This is documentiD" + documentId);
-    
+
 
     let body = JSON.stringify({
         "fields": {
@@ -60,29 +60,29 @@ function updateOrderData() {
     console.log("This is documentid " + documentId);
     console.log("Updating function active.... Beginning fetch");
 
-    
+
     const firestoreDocumentURL = `https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders/${documentId}`;
 
     fetch(firestoreDocumentURL, {
-        method: "PATCH", 
+        method: "PATCH",
         headers: {
             "Content-type": "application/json"
         },
         body: body
     })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-        console.log("Fetch complete! order updated");
-    })
-    .catch(error => console.log(error));
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            console.log("Fetch complete! order updated");
+        })
+        .catch(error => console.log(error));
 }
 
 
 function getAdminContent(content) {
     const contDocs = content.documents;
 
-    let adminHTML = ""; 
+    let adminHTML = "";
 
     for (let content of contDocs) {
         const fullDocsPath = content.name;
@@ -110,7 +110,7 @@ function getAdminContent(content) {
             if (content.fields.productId && content.fields.productId.stringValue) {
                 adminHTML += `<li>Product id: ${content.fields.productId.stringValue}</li>`;
             }
-            if (content.fields.shipping && content.fields.shipping.stringValue) {
+            if (content.fields.shipping && content.fields.shipping.stringValue || content.fields.selectedShippingOption && content.fields.selectedShippingOption.value) {
                 adminHTML += `<li>Shipping: ${content.fields.shipping.stringValue}</li>`;
             }
         }
@@ -122,7 +122,7 @@ function getAdminContent(content) {
             <hr>
             </article>
         `;
-}
+    }
 
     adminSectionEl.innerHTML = adminHTML;  //Kod nedan har unikt id till deleteOrderButton och en data-document-id som sparar id associerat med den knappen
     const deleteOrderButtons = document.querySelectorAll('.deleteOrderButton');
@@ -139,45 +139,36 @@ function getAdminContent(content) {
 
 function deleteOrder(documentId) {
 
-    
-    
-    const firestoreDocumentURL = `https://firestore.googleapis.com/v1/projects/new-javascript-api-4d376/databases/(default)/documents/orders/${documentId}`;
+
+    const firestoreDocumentURL = `https://firestore.googleapis.com/v1/${documentId}`;
+    console.log(documentId);
     console.log("Trying to delete document with ID:", firestoreDocumentURL);
 
     fetch(firestoreDocumentURL, {
-        method: "DELETE", 
+        method: "DELETE",
     })
-    .then(res => {
-        if (res.status === 204) {
-            
-            console.log("Document deleted successfully.");
-            
-            const orderElement = document.querySelector(`[data-order-id="${documentId}"]`); //Tar bort HTML elementen associerade med ordern också:
-            if (orderElement) {
-                orderElement.remove();
+        .then(res => {
+            if (res.status === 200 || res.status(204)) {
+
+                console.log("Order was deleted.");
+                alert("Order was successfully deleted")
+
+
+                const orderElement = document.querySelector(`[data-order-id="${documentId}"]`); //Tar bort HTML elementen associerade med ordern också:
+                if (orderElement) {
+                    orderElement.remove();
+                }
+
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            } else {
+                console.log("Failed to delete order. Status Code:", res.status);
+                alert("Failed to delete order, please check logs")
+                return res.text();
             }
-
-            location.reload(); //Refreshar hemsidan efter deletion
-        } else {
-            console.log("Failed to delete document. Status Code:", res.status);
-        }
-    })
-    .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
 }
 
 
-/*
-if (res.status === 204) {
-            
-    console.log("Document deleted successfully.");
-    
-    const orderElement = document.querySelector(`[data-order-id="${documentId}"]`); 
-    if (orderElement) {
-        orderElement.remove();
-    }
-
-    location.reload(); //Refreshar hemsidan efter deletion
-} else {
-    console.log("Failed to delete document.");
-}
-}) */

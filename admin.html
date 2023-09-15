@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Page</title>
 </head>
+
 <body>
 
- 
-<a href="index.html">Home</a>
-<a href="cart.html">Purchase</a>
+
+  <a href="index.html">Home</a>
+  <a href="cart.html">Order Page</a>
   <BR></BR>
 
 
 
-<section>
+  <section>
 
-<article class="articleFrame">
-  <h2>Admin page</h2>
-  <h1>Editing orders - Deleting orders</h1>
-                <br><br>
-            <fieldset>
-                <legend><strong>Update order data:</strong></legend><br>
-                    <form onSubmit="return false">
-                      <input type="text" id="admin-id" name="id" placeholder="Enter order ID">
-                        <br><br>
-                        <input type="text" id="admin-name" name="name" placeholder="Enter new full name" required>
-                        <br><br>
-                        <input type="email" id="admin-email" name="email" placeholder="Enter new email" required>
-                        <br><br>
-                        <input type="text" id="admin-address" name="address" placeholder="Enter new adress" required>
-                        <br><br>
-                        <input type="text" id="admin-productId" name="productid" placeholder="Enter new product ID">
-                        <br><br>
+    <article class="articleFrame">
+      <h2>Admin page</h2>
+      <h1>Editing orders - Deleting orders</h1>
+      <br><br>
+      <fieldset>
+        <legend><strong>Update order data:</strong></legend><br>
+        <form onSubmit="return false">
+          <input type="text" id="admin-id" name="id" placeholder="Enter order ID">
+          <br><br>
+          <input type="text" id="admin-name" name="name" placeholder="Enter new full name" required>
+          <br><br>
+          <input type="email" id="admin-email" name="email" placeholder="Enter new email" required>
+          <br><br>
+          <input type="text" id="admin-address" name="address" placeholder="Enter new adress" required>
+          <br><br>
+          <input type="text" id="admin-productId" name="productid" placeholder="Enter new product ID">
+          <br><br>
 
-                        <select name="deliveryMethods" id="admin-shipping">
-                          <option value="postOfficeDelivery">Post office</option>
-                          <option value="homeDelivery">Home delivery</option>
-                          <option value="instaBoxDelivery">Instabox</option>
-                      </select>
-                      -
-          
-                        <button type="button" class="btn" id="orderUpdateButton">Update order</button>
-                    </form>
-                </fieldset>
-        </article>
-    </section>
-    
-    <section id="adminSection">
-      <h2>Placed Orders:</h2>
-    </section>
+          <select name="deliveryMethods" id="admin-shipping">
+            <option value="postOfficeDelivery">Post office</option>
+            <option value="homeDelivery">Home delivery</option>
+            <option value="instaBoxDelivery">Instabox</option>
+          </select>
+          -
 
-    
+          <button type="button" class="btn" id="orderUpdateButton">Update order</button>
+        </form>
+      </fieldset>
+    </article>
+  </section>
+
+  <section id="adminSection">
+    <h2>Placed Orders:</h2>
+  </section>
 
 
-<script type = "module" src="admin.js"></script>
+
+
+  <script type="module" src="admin.js"></script>
 </body>
-</html> 
+
+</html>
